@@ -45,10 +45,10 @@ public class ModelImpl implements Model {
     @Override
     public String unpark(Integer ticket) {
         Car car = parking.getCars().remove(ticket);
-        countCars.decrementAndGet();
         if (car == null) {
             return "No such ticket number " + ticket;
         }
+        countCars.decrementAndGet();
         parking.getTickets().offer(car.getTicket());
         return "Car with ticket " + ticket + " left the parking";
     }

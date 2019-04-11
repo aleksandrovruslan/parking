@@ -52,4 +52,27 @@ public class ModelImplTest {
         String message = model.unpark(ticket);
         assertTrue(message.endsWith(suffixUnparkSeccess));
     }
+
+    @Test
+    public void when_parking10_unpark5_parking5() {
+        Model model = new ModelImpl(10, 0);
+        for (int i = 0; i < 10; i++) {
+            model.park();
+        }
+        Iterator<Car> iterator = model.list().iterator();
+        for (int i = 0; i < 5; i++) {
+            if (iterator.hasNext()) {
+                model.unpark(iterator.next().getTicket().getNumber());
+            }
+        }
+        assertEquals(model.countCars(), 5);
+    }
+
+    @Test
+    public void when_unpark_ticket_wrong_count1_count1() {
+        Model model = new ModelImpl(1, 0);
+        model.park();
+        model.unpark(-1);
+        assertEquals(model.countCars(), 1);
+    }
 }
