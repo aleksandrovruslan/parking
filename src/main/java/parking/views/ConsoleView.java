@@ -18,7 +18,6 @@ public class ConsoleView implements View {
             , "e - exit application."};
     private String exitCommand = "e";
 
-    @Override
     public void startApplication() {
         for (String prompt : prompts) {
             showMessage(prompt);
@@ -26,7 +25,7 @@ public class ConsoleView implements View {
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             String command = reader.readLine();
             while (command != null && !exitCommand.equals(command)) {
-                dispatcher.runCommand(Optional.ofNullable(command));
+                dispatcher.runCommand(Optional.ofNullable(command), this);
                 command = reader.readLine();
             }
             showMessage("Bye!");
@@ -35,14 +34,13 @@ public class ConsoleView implements View {
         }
     }
 
-    @Override
-    public void showMessage(String message) {
-        System.out.println(message);
+    public void setDispatcher(DispatcherController dispatcher) {
+        this.dispatcher = dispatcher;
     }
 
     @Override
-    public void setDispatcher(DispatcherController dispatcher) {
-        this.dispatcher = dispatcher;
+    public void showMessage(String message) {
+        System.out.println(message);
     }
 
 }

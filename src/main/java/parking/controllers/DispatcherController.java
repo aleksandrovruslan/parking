@@ -1,12 +1,14 @@
 package parking.controllers;
 
+import parking.views.View;
+
 import java.util.Optional;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 public interface DispatcherController {
 
-    Consumer<String> putCommand(String command, Consumer<String> consumer);
+    void putCommand(String command, BiConsumer<String, View> consumer);
 
-    void runCommand(Optional<String> command);
+    void runCommand(Optional<String> commandColonArguments, View view);
 
 }
