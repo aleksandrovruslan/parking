@@ -2,20 +2,14 @@ package parking.models;
 
 public class Ticket {
 
-    private static volatile int count;
     private int number;
 
-    public Ticket() {
-        number = countIncrement();
+    public Ticket(int number) {
+        this.number = number;
     }
 
     public int getNumber() {
         return number;
-    }
-
-    private static synchronized int countIncrement() {
-        count = ++count;
-        return count;
     }
 
     @Override
@@ -40,4 +34,5 @@ public class Ticket {
                 "number=" + number +
                 '}';
     }
+
 }
