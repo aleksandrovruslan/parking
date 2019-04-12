@@ -19,7 +19,7 @@ public class Controller {
         dispatcher.putCommand("u", this::unpark);
         dispatcher.putCommand("l", this::list);
         dispatcher.putCommand("c", this::count);
-        dispatcher.putCommand("shutdown_controller", this::shutdown);
+        dispatcher.putFinalizeController(this::shutdown);
     }
 
     public void park(String carCount, View view) {
@@ -51,7 +51,7 @@ public class Controller {
         view.showMessage("In the parking of " + model.countCars() + " cars.");
     }
 
-    public void shutdown(String empty, View view) {
+    private void shutdown() {
         service.shutdown();
     }
 
