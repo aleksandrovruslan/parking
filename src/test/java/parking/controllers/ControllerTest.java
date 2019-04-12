@@ -56,7 +56,7 @@ public class ControllerTest {
         when(model.unpark(1)).thenReturn("");
         doNothing().when(view).showMessage("");
         controller.unpark("1", view);
-        verify(view).showMessage("");
+        verify(view, timeout(15000)).showMessage("");
     }
 
     @Test
@@ -75,7 +75,7 @@ public class ControllerTest {
         when(model.unpark(any())).thenReturn("");
         doNothing().when(view).showMessage("");
         controller.unpark("[1,2,3]", view);
-        verify(view, times(3)).showMessage("");
+        verify(view, timeout(25000).times(3)).showMessage("");
     }
 
     @Test
