@@ -9,8 +9,8 @@ import java.util.concurrent.Executors;
 
 public class Controller {
     private DispatcherController dispatcher;
-    private Model model;
-    private ExecutorService service = Executors.newCachedThreadPool();
+    private final Model model;
+    private final ExecutorService service = Executors.newFixedThreadPool(2);
 
     public Controller(DispatcherController dispatcher, Model model) {
         this.dispatcher = dispatcher;
@@ -36,7 +36,7 @@ public class Controller {
         if (ticket.matches("^\\[+\\d+(,\\d+)*\\]+$|\\d+")) {
             String[] tickets = ticket.replaceAll("[^0-9,]", "").split(",");
             Arrays.stream(tickets).map(Integer::parseInt)
-                    .map(model::unpark).forEach(view::showMessage);
+                    .forEach((i) -> service.submit(() -> view.showMessage(model.unpark(i))));
         } else {
             view.showMessage("Incorrect tickets state.");
         }
