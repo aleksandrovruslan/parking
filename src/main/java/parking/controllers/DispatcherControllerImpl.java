@@ -2,15 +2,14 @@ package parking.controllers;
 
 import parking.views.View;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.BiConsumer;
 
 public class DispatcherControllerImpl implements DispatcherController {
 
     private Map<String, BiConsumer<String, View>> commandMap = new HashMap<>();
     private BiConsumer<String, View> defaultCommand;
+    private Set<Runnable> finalizeControllers = new HashSet<>();
 
     public DispatcherControllerImpl(BiConsumer<String, View> defaultCommand) {
         this.defaultCommand = defaultCommand;
@@ -28,6 +27,16 @@ public class DispatcherControllerImpl implements DispatcherController {
         String command = str.contains(":") ? str.substring(0, str.indexOf(":")) : str;
         String argument = str.contains(":") ? str.substring(str.indexOf(":") + 1) : "";
         commandMap.getOrDefault(command, defaultCommand).accept(argument, view);
+    }
+
+    @Override
+    public void putFinalizeController(Runnable finalizeController) {
+        finalizeControllers.add(finalizeController);
+    }
+
+    @Override
+    public void finalizeControllers() {
+        finalizeControllers.forEach(Runnable::run);
     }
 
 }
