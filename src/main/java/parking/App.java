@@ -6,6 +6,9 @@ import parking.controllers.DispatcherControllerImpl;
 import parking.services.Model;
 import parking.services.ModelImpl;
 import parking.views.ConsoleView;
+import parking.views.View;
+
+import java.util.function.BiConsumer;
 
 public class App {
 
@@ -23,8 +26,9 @@ public class App {
             }
         }
         ConsoleView view = new ConsoleView();
-        DispatcherController dispatcher = new DispatcherControllerImpl(
-                (s, v) -> v.showMessage("Command not found!"));
+        BiConsumer<String, View> defCommand =
+                (s, v) -> v.showMessage("Command not found!");
+        DispatcherController dispatcher = new DispatcherControllerImpl(defCommand);
         Model model = new ModelImpl(defParkingSize, defParkTime);
         new Controller(dispatcher, model);
         view.setDispatcher(dispatcher);
