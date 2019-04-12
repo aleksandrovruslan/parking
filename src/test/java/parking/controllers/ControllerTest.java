@@ -31,7 +31,7 @@ public class ControllerTest {
     @Test
     public void when_create_count_command4() {
         doNothing().when(dispatcher).putCommand(any(), any());
-        verify(dispatcher, times(4)).putCommand(any(), any());
+        verify(dispatcher, times(5)).putCommand(any(), any());
     }
 
     @Test

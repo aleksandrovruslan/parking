@@ -29,6 +29,7 @@ public class ConsoleView implements View {
                 command = reader.readLine();
             }
             showMessage("Bye!");
+            dispatcher.runCommand(Optional.ofNullable("shutdown_controller"), this);
         } catch (IOException e) {
             e.printStackTrace();
         }
