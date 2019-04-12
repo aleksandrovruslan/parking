@@ -11,4 +11,8 @@ public interface DispatcherController {
 
     void runCommand(Optional<String> commandColonArguments, View view);
 
+    void putFinalizeController(Runnable finalizeController);
+
+    void finalizeControllers();
+
 }
