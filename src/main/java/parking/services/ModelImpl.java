@@ -23,23 +23,26 @@ public class ModelImpl implements Model {
 
     @Override
     public String park() {
+        String message = "";
         if (countCars.get() >= size) {
-            return "Parking is busy.";
+            message += "Parking is busy.";
+        } else {
+            Car car = new Car();
+            Ticket ticket = parking.getTickets().poll();
+            if (ticket == null) {
+                ticket = new Ticket(ticketCount.incrementAndGet());
+            }
+            car.setTicket(ticket);
+            parking.getCars().put(ticket.getNumber(), car);
+            countCars.incrementAndGet();
+            try {
+                Thread.sleep(timeParking);
+            } catch (InterruptedException e) {
+                message += "Parking is urgently completed." + System.lineSeparator();
+            }
+            message += car + " was parked.";
         }
-        Car car = new Car();
-        Ticket ticket = parking.getTickets().poll();
-        if (ticket == null) {
-            ticket = new Ticket(ticketCount.incrementAndGet());
-        }
-        car.setTicket(ticket);
-        parking.getCars().put(ticket.getNumber(), car);
-        countCars.incrementAndGet();
-        try {
-            Thread.sleep(timeParking);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return car + " was parked.";
+        return message;
     }
 
     @Override

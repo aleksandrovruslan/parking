@@ -35,8 +35,9 @@ public class DispatcherControllerImpl implements DispatcherController {
     }
 
     @Override
-    public void finalizeControllers() {
+    public void finalizeControllers(Runnable finalMessage) {
         finalizeControllers.forEach(Runnable::run);
+        finalMessage.run();
     }
 
 }

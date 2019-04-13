@@ -52,7 +52,7 @@ public class Controller {
     }
 
     private void shutdown() {
-        service.shutdown();
+        service.shutdownNow();
     }
 
 }

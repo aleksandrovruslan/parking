@@ -13,6 +13,6 @@ public interface DispatcherController {
 
     void putFinalizeController(Runnable finalizeController);
 
-    void finalizeControllers();
+    void finalizeControllers(Runnable finalMessage);
 
 }
